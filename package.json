@@ -1,0 +1,17 @@
+{
+  "name": "formularioitm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "scripts": {
+    "dev": "node App.js",
+    "test": "no test script"
+  },
+  "author": "Zapata",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.1"
+  }
+}
