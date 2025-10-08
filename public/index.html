@@ -141,9 +141,14 @@
             <button class="option-btn" data-group="caminando" data-value="peaton"><span>🚶‍♂</span>Peatón</button>
         </div>
     </div>
-    <button class="submit-btn" onclick="enviarFormulario()">Enviar</button>
+    <button class="submit-btn">Enviar</button>
 </div>
 <script>
+    submitBtn = document.querySelector('.submit-btn');
+    submitBtn.addEventListener('click', async () => {
+        await enviarFormulario();
+    });
+
     // Cambio de categoría
     document.querySelectorAll('.category-select input[type="radio"]').forEach(function(input) {
         input.addEventListener('change', function() {
@@ -159,7 +164,7 @@
         });
     });
     // Enviar formulario
-    function enviarFormulario() {
+    async function enviarFormulario() {
         var mainType = document.querySelector('.category-select input[type="radio"]:checked').value;
         var opcionesSeleccionadas = [];
         document.querySelectorAll('.option-btn.selected').forEach(function(btn) {
@@ -167,7 +172,35 @@
                 opcionesSeleccionadas.push(btn.dataset.value);
             }
         });
-        alert('Categoría: ' + mainType + '\nOpciones: ' + opcionesSeleccionadas.join(', '));
+
+        try {
+            const response = await fetch('http://localhost:3000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    mainType: mainType,
+                    options: opcionesSeleccionadas
+                })
+            });
+
+            if (response.status === 400) {
+                alert('Por favor, selecciona al menos una opción para el tipo de transporte elegido.');
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor: ' + response.status);
+            }
+
+
+            alert('Formulario enviado con éxito: ' + response.status + ' ' + await response.text());
+            window.location.reload();
+        } catch (error) {
+            alert('Error al enviar el formulario: ' + error.message);
+        }
+        
     }
 </script>
 </body>
