@@ -8,7 +8,6 @@ const path = require('path');
 
 // Crear una instancia de la aplicación Express
 const app = express();
-const port = 3000;
 
 // Registro de middlewares para parsear el cuerpo de las solicitudes
 app.use(bodyParser.urlencoded({ extended: true }));
