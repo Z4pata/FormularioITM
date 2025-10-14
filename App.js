@@ -1,4 +1,6 @@
 // Importar módulos necesarios
+require('dotenv').config();  // Carga el archivo .env
+
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
@@ -17,10 +19,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configurar conexión a la base de datos MySQL
 const db = mysql.createConnection({
-    host: 'bel5avamvsyg1jzc1bef-mysql.services.clever-cloud.com', // Host de MySQL
-    user: 'uvhk82ypr3uvh3rq',      // Usuario de MySQL
-    password: 'rCHW62U2OEvm0dCeqZwV',      // Contraseña de MySQL
-    database: 'bel5avamvsyg1jzc1bef' // Nombre de la base de datos
+    host: process.env.HOST_BD, // Host de MySQL
+    user: process.env.USER_BD,      // Usuario de MySQL
+    password: process.env.PASSWORD_BD,      // Contraseña de MySQL
+    database: process.env.NAME_BD // Nombre de la base de datos
 });
 
 // Conectar a la base de datos
@@ -38,9 +40,11 @@ db.connect((err) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `;
+
     db.query(createTable, (err) => {
         if (err) throw new Error('Error creando tabla submissions: ' + err);
     });
+
     console.log('Conexión exitosa a la base de datos.');
 });
 
@@ -55,6 +59,7 @@ app.post('/submit', (request, response) => {
 
     // Insertar datos en la base de datos
     const query = 'INSERT INTO submissions (main_type, options) VALUES (?, ?)';
+
     db.query(query, [mainType, JSON.stringify(options)], (err, result) => {
         if (err) {
             console.error('Error al insertar datos:', err);
