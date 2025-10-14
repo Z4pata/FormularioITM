@@ -144,30 +144,41 @@
     <button class="submit-btn">Enviar</button>
 </div>
 <script>
+    mainTypeInputs = document.querySelectorAll('.category-select input[type="radio"]');
+    optionBtns = document.querySelectorAll('.option-btn');
     submitBtn = document.querySelector('.submit-btn');
+
+
+
     submitBtn.addEventListener('click', async () => {
         await enviarFormulario();
     });
 
     // Cambio de categoría
-    document.querySelectorAll('.category-select input[type="radio"]').forEach(function(input) {
+    mainTypeInputs.forEach(function(input) {
         input.addEventListener('change', function() {
             document.getElementById('privado-group').style.display = this.id === "privado" ? "block" : "none";
             document.getElementById('publico-group').style.display = this.id === "publico" ? "block" : "none";
             document.getElementById('caminando-group').style.display = this.id === "caminando" ? "block" : "none";
         });
     });
+
+
     // Selección múltiple de opciones por grupo
-    document.querySelectorAll('.option-btn').forEach(function(btn) {
+    optionBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
             this.classList.toggle('selected');
         });
     });
+
+
     // Enviar formulario
     async function enviarFormulario() {
         var mainType = document.querySelector('.category-select input[type="radio"]:checked').value;
+        var selectedOptionBtns = document.querySelectorAll('.option-btn.selected');
+
         var opcionesSeleccionadas = [];
-        document.querySelectorAll('.option-btn.selected').forEach(function(btn) {
+        selectedOptionBtns.forEach(function(btn) {
             if (btn.dataset.group === mainType) {
                 opcionesSeleccionadas.push(btn.dataset.value);
             }
