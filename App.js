@@ -48,6 +48,12 @@ db.connect((err) => {
     console.log('Conexión exitosa a la base de datos.');
 });
 
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 // Ruta para manejar el envío del formulario
 app.post('/submit', (request, response) => {
     const { mainType, options } = request.body;
@@ -69,7 +75,13 @@ app.post('/submit', (request, response) => {
     });
 });
 
-// Iniciar el servidor
-app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
-});
+// Exportar la app para Vercel
+module.exports = app;
+
+// Solo escuchar si se ejecuta localmente
+if (require.main === module) {
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Servidor corriendo en http://localhost:${port}`);
+    });
+}
