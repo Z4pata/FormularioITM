@@ -107,3 +107,15 @@ h1 {
 .submit-btn:hover {
     background: #163fd6;
 }
+@media (max-width: 480px) {
+    .category-select {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .category-select label {
+        width: 80%;
+        text-align: center;
+    }
+}
