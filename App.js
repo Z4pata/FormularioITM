@@ -3,15 +3,13 @@ require('dotenv').config();  // Carga el archivo .env
 
 const express = require('express');
 const mysql = require('mysql2');
-const bodyParser = require('body-parser');
 const path = require('path');
 
 // Crear una instancia de la aplicación Express
 const app = express();
 
 // Registro de middlewares para parsear el cuerpo de las solicitudes
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Servir archivos estáticos (como index.html)
 app.use(express.static(path.join(__dirname, 'public')));

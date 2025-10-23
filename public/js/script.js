@@ -60,10 +60,24 @@ async function enviarFormulario() {
         }
 
 
-        alert('Formulario enviado con éxito: ' + response.status + ' ' + await response.text());
-        window.location.reload();
+        Swal.fire({
+            title: "Formulario enviado!",
+            text: "El formulario se ha enviado correctamente.",
+            imageUrl: "https://media.licdn.com/dms/image/v2/C4D03AQFVVISDympVyw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1559571613596?e=2147483647&v=beta&t=z2ih8dUc5e_hCnmfZZRhm4gnz70lr7WEEVXYiB_uiGc",
+            imageWidth: 350,
+            imageHeight: 250,
+            imageAlt: "Custom image"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        });
     } catch (error) {
-        alert('Error al enviar el formulario: ' + error.message);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Algo salió mal!",
+        });
     }
 
 }

@@ -11,7 +11,7 @@ Recolectar datos de movilidad estudiantil para apoyar decisiones institucionales
 - [Express](https://expressjs.com/) – Framework para Node.js
 - [MySQL](https://www.mysql.com/) – Base de datos relacional
 - [dotenv](https://www.npmjs.com/package/dotenv) – Manejo de variables de entorno
-- [body-parser](https://www.npmjs.com/package/body-parser) – Parseo de datos enviados desde formularios
+- [sweetalert2](https://sweetalert2.github.io)
 
 ## 📦 Instalación
 
